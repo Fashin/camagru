@@ -1,4 +1,5 @@
-#video { height: 35vh; width: 62vw; margin: 5vh 0 0 18vw}
+#video { position: relative; top: 6vh; left: 26vw; width: 42vw; }
+#filtres { position: absolute; border: 1px solid red; top: 12vh; left: 26vw; width: 42vw; height: 31vh; }
 #startbutton
 {
   background-image: url("../pictures/take_picture.png");
@@ -10,4 +11,4 @@
   cursor: pointer;
 }
 #startbutton:hover { background-image: url("../pictures/take_picture-hover.png"); }
-#canvas { height: 35vh; width: 62vw; margin: 5vh 0 0 18vw; }
+#canvas { position: absolute; top: 45vh; left: 26vw; width: 42vw; height: 31vh; }
