@@ -1,0 +1,9 @@
+.form-connection
+{
+  display: block;
+  position: relative;
+  top: 14vh; left: 20vw;
+  width: 36vw;
+}
+
+.form-connection input { float: right; display: block; }
