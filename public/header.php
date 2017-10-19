@@ -1,7 +1,5 @@
 <?php
 
-  session_start();
-
   $src = explode('/', $_SERVER['REQUEST_URI']);
 
   $stylesheet = (empty($src[count($src) - 1])) ? "index" : explode('.', $src[count($src) - 1])[0];

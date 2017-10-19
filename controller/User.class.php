@@ -32,7 +32,7 @@ class User
     return ($this->_pdo->query($sql)->fetchAll());
   }
 
-  public function connect(Array $data, $redirect)
+  public function connect($data, $redirect)
   {
     session_start();
     $_SESSION['id'] = $data['id'];

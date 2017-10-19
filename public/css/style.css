@@ -4,7 +4,7 @@ header { display: block; background: #4074A5; height: 6vh; color: white; }
 
 header .title {font-size: 5vh; float: left; }
 
-header .register, .signin {float: right; cursor: pointer; color: white; text-decoration: none; margin: 2vw 2vw 0 0; }
+header .register, .signin {float: right; cursor: pointer; color: white; text-decoration: none; margin: 1.5vh 2vw 0 0; }
 
 header .register:hover, .signin:hover { text-decoration: underline; }
 

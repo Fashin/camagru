@@ -1,5 +1,7 @@
 <?php
 
+    session_start();
+
     $DB_DSN = "mysql:host=localhost;";
     $DB_NAME = "camagru";
     $DB_USER = "root";
