@@ -52,18 +52,21 @@
 
      f_context.clearRect(0, 0, f_canvas.width, f_canvas.height);
      if (type == 'drag')
-        f_context.drawImage(m_img, img_pro.x, img_pro.y, prop_img.width, prop_img.height);
+        f_context.drawImage(m_img, img_pro.x - prop_img.width, img_pro.y - prop_img.height, prop_img.width, prop_img.height);
      else if (type == 'resize')
        f_context.drawImage(m_img, prop_img.x, prop_img.y, img_pro.x, img_pro.y);
    }
 
    function getMousePos(canvas, evt)
    {
-     let rect = f_canvas.getBoundingClientRect();
+     let  rect = f_canvas.getBoundingClientRect(),
+          size = video.getBoundingClientRect(),
+          scaleX = size.width / rect.width,
+          scaleY = size.height / rect.height;
 
      return {
-       x: (evt.pageX - (rect.left * 1.5)),
-       y: (evt.pageY - (rect.top * 1.5))
+       x: (evt.clientX - rect.left) * scaleX,
+       y: (evt.clientY - rect.top) * scaleY
      };
    }
 
