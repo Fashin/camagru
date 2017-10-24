@@ -28,6 +28,12 @@
     else
       $user->connect($error, 'index.php');
   }
+  else if (isset($_GET['page']) && $_GET['page'] == 'logout')
+  {
+    session_start();
+    session_destroy();
+    header('Location: index.php?info=logout');
+  }
   else
   {
     require_once("public/header.php");

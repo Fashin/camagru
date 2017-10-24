@@ -32,10 +32,10 @@ class User
     return ($this->_pdo->query($sql)->fetchAll());
   }
 
-  public function connect($data, $redirect)
+  public function connect($id, $redirect)
   {
     session_start();
-    $_SESSION['id'] = $data['id'];
+    $_SESSION['id'] = $id;
     header('Location:'.$redirect);
   }
 
@@ -48,16 +48,21 @@ class User
       if (in_array($k, $require) && !empty($v))
         $data[$k] = htmlspecialchars($v);
       else
-        return (0);
+        return (-1);
     }
-    if ($data['psswd'] != $data['confirm_psswd'] || !preg_match($pattern, $data['psswd']) || $this->get_user("id", array("login"=>$data['log_in'])))
-      return (0);
+    if ($data['psswd'] != $data['confirm_psswd'])
+      return (-2);
+    if ($this->get_user("id", array("login"=>$data['log_in'])))
+      return (-3);
+    if (!preg_match($pattern, $data['psswd']))
+      return (-4);
     $sql = "INSERT INTO user (login, email, psswd, is_confirmed) VALUES ";
     $sql .= "('" . $data['log_in'] . "', '" . $data['email'] . "', '" . hash('whirlpool', $this->salt . $data['psswd']) .  "', 0)";
     $text = "Salut a tous !";
-    if (!mail($data['email'], "subscribe to Cyprian's Camagru", $text))
-      return (0);
-    return ($this->_pdo->query($sql));
+    mail($data['email'], "subscribe to Cyprian's Camagru", $text);
+    $ret['errror'] = ($this->_pdo->query($sql)) ? 0 : 1;
+    $id = $this->get_user("id", array("login"=>$data['log_in']));
+    return ($ret['id'] = $id[0]['id']);
   }
 }
 

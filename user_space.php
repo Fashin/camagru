@@ -37,6 +37,11 @@
   let dragging = false;
   let key_pressed = false;
 
+  img.src = 'public/pictures/filtres/flocon.png';
+  img.onload = () => {
+    f_context.drawImage(img, 0, 0, 80, 80);
+  };
+
   /**
    * Here the drag and drop comportement
    */
@@ -61,11 +66,6 @@
        y: (evt.pageY - (rect.top * 1.5))
      };
    }
-
-   img.src = 'public/pictures/filtres/flocon.png';
-   img.onload = () => {
-     f_context.drawImage(img, 0, 0, 80, 80);
-   };
 
    f_canvas.addEventListener('mousedown', (e) => {
      e.preventDefault();
@@ -98,7 +98,7 @@
      e.preventDefault();
      e.stopPropagation();
      dragging = false;
-     console.log("mouse up " + img.x);
+     //console.log("mouse up " + img.x);
    });
 
    document.addEventListener('keydown', (evt) => {
@@ -114,10 +114,14 @@
     * Here add the camera comportemenet
     */
    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+   {
      navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
        video.src = window.URL.createObjectURL(stream);
        video.play();
      });
+   }
+   else
+    console.log("your navigator don't support camera");
    document.getElementById('startbutton').addEventListener('click', () => {
      context.drawImage(video, 0, 0, canvas.width, canvas.height);
      context.drawImage(img, prop_img.x, prop_img.y, prop_img.width, prop_img.height);
