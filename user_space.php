@@ -163,18 +163,27 @@
     upload_button.addEventListener('click', (e) => {
       let xml = new XMLHttpRequest();
       let picture_upload = canvas.toDataURL("image/png");
+      let blank = document.createElement('canvas');
 
-      xml.onreadystatechange = () => {
-        if (xml.readyState == 4 && (xml.status == 200 || xml.status == 0))
-        {
-          if (xml.response > 0)
-            console.log("picture correctly saved");
+      blank.width = canvas.width;
+      blank.height = canvas.height;
+      if (canvas.toDataURL() == blank.toDataURL())
+        console.log("please take or upload a picture");
+      else
+      {
+        xml.onreadystatechange = () => {
+          if (xml.readyState == 4 && (xml.status == 200 || xml.status == 0))
+          {
+            console.log(xml.response);
+            if (xml.response > 0)
+              console.log("picture correctly saved");
+          }
         }
-      }
 
-      xml.open('POST', 'controller/put_pictures.php', true);
-      xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xml.send("img=" + picture_upload);
+        xml.open('POST', 'controller/put_pictures.php', true);
+        xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xml.send("img=" + picture_upload);
+      }
     });
 
     /**

@@ -12,7 +12,7 @@ if ($img)
   $img = base64_decode($img);
   $user = new User($db, $_SESSION['id']);
   $user->add_picture();
-  file_put_contents('../public/pictures/user_pictures/' . $user->last_saved, $data);
+  file_put_contents('../public/pictures/user_pictures/' . $user->last_saved, $img);
   echo $user->last_saved;
 }
 else
