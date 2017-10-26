@@ -1,5 +1,5 @@
-#video { position: relative; top: 6vh; left: 26vw; height: 300px; }
-#filtres { position: absolute; border: 1px solid red; top: 12vh; left: 26vw; width: 400px; height: 300px; }
+#video { position: relative; top: 6vh; left: 8vw; height: 300px; }
+#filtres, #background_filter { position: absolute; border: 1px solid red; top: 12vh; left: 26vw; width: 400px; height: 300px; }
 #startbutton
 {
   background-image: url("../pictures/take_picture.png");
@@ -7,8 +7,9 @@
   background-repeat: no-repeat;
   height: 4vh; width: 6vw;
   display: inline-block;
-  position: absolute; right: 20vw;
   cursor: pointer;
 }
 #startbutton:hover { background-image: url("../pictures/take_picture-hover.png"); }
-#canvas { position: absolute; top: 45vh; left: 26vw; width: 400px; height: 300px; }
+#canvas { position: relative; top: 10vh; left: 26vw; width: 400px; height: 300px; display: block; }
+.upload_button { float: right; margin: 8vh 5vw 0 0; }
+.outils { height: 100%; width: 18vw; border: 1px solid black; float: left; text-align: center; margin-top: 6vh; }

@@ -26,8 +26,8 @@
           ?>
             <span class="login"></span>
             <span class="avatar"></span>
-            <a href="user_space.php"><span class="personal_space">Espace Personnel</span></a>
             <a href="connect.php?page=logout"><span class="logout">Log Out</span></a>
+            <a href="user_space.php"><span class="personal_space">Espace Personnel</span></a>
           <?php
         }
         else

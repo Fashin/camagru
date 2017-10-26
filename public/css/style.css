@@ -8,6 +8,10 @@ header .register, .signin {float: right; cursor: pointer; color: white; text-dec
 
 header .register:hover, .signin:hover { text-decoration: underline; }
 
-header .personal_space { color: white; float: right; margin: 2vw 2vw 0 0; text-decoration: none; cursor: pointer; }
+header .personal_space { color: white; float: right; margin: 1.5vh 2vw 0 0; text-decoration: none; cursor: pointer; }
 
 header .personal_space:hover { text-decoration: underline; }
+
+header .logout { color: white; float: right; margin: 1.5vh 2vw 0 0; text-decoration: none; cursor: pointer; }
+
+header .logout:hover { text-decoration: underline; }

@@ -4,11 +4,16 @@ class User
 {
   private $_pdo;
   private $_salt;
+  private $_picture;
+  private $_id;
+  public $last_saved = null;
 
-  function __construct(PDO $obj)
+  function __construct(PDO $obj, $id = null)
   {
     $this->_pdo = $obj;
     $this->salt = hash('whirlpool', "g1rst35g4065srtg4035rstg435");
+    if ($id)
+      $this->_id = $id;
   }
 
   public function get_user($selection = null, $condition = null)
@@ -30,6 +35,25 @@ class User
       $sql = substr($sql, 0, -5);
     }
     return ($this->_pdo->query($sql)->fetchAll());
+  }
+
+  public function get_pictures()
+  {
+    return ($this->_picture);
+  }
+
+  public function add_picture()
+  {
+    if ($this->_id)
+    {
+      $this->last_saved = uniqid($this->_id) . ".png";
+      $path = "public/pictures/user_pictures/" . $name;
+      $stmt = $this->_pdo->prepare("INSERT INTO picture (path, id_user) VALUES (:path, :id_user)");
+      $stmt->execute(array(
+        ':path' => $path,
+        ':id_user' => $this->_id
+      ));
+    }
   }
 
   public function connect($id, $redirect)
