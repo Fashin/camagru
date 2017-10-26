@@ -10,8 +10,10 @@
 ?>
 
 <div class="outils">
-  <div id="startbutton"></div>
-  <input type="color" name="color_picker" class="color_picker">
+  <div id="startbutton"></div><br><br>
+  <input type="color" name="color_picker" class="color_picker"><br>
+  <input type="submit" name="apply_filter" value="Apply" class="apply_background">
+  <input type="submit" name="clean_canvas" value="Clean" class="clean_background"><br><br>
   <div class="filtre-container">
     <?php
       $filtres = scandir('public/pictures/filtres');
@@ -26,11 +28,9 @@
         }
       }
     ?>
-      </select>
-      <input type="submit" name="apply_filter" value="Apply Filter" class="apply_filter">
-      <input type="submit" name="clean_canvas" value="Clean Filter" class="clean_filter">
-      <input type="submit" name="apply_filter" value="Apply Background" class="apply_background">
-      <input type="submit" name="clean_canvas" value="Clean Background" class="clean_background">
+  </select><br>
+      <input type="submit" name="apply_filter" value="Apply" class="apply_filter">
+      <input type="submit" name="clean_canvas" value="Clean" class="clean_filter">
   </div>
   <input class="upload_button" type="submit" name="send" value="Sauvegarder">
 </div>

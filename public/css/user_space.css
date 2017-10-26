@@ -3,13 +3,13 @@
 #startbutton
 {
   background-image: url("../pictures/take_picture.png");
-  background-size: 4vh;
+  background-size: 5vw 11vh;
   background-repeat: no-repeat;
-  height: 4vh; width: 6vw;
+  height: 11vh; width: 5vw;
   display: inline-block;
   cursor: pointer;
 }
 #startbutton:hover { background-image: url("../pictures/take_picture-hover.png"); }
 #canvas { position: relative; top: 10vh; left: 26vw; width: 400px; height: 300px; display: block; }
-.upload_button { float: right; margin: 8vh 5vw 0 0; }
+.upload_button { margin: 4vh 0 2vh 0; }
 .outils { height: 100%; width: 18vw; border: 1px solid black; float: left; text-align: center; margin-top: 6vh; }
