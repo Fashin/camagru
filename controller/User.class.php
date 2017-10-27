@@ -4,7 +4,6 @@ class User
 {
   private $_pdo;
   private $_salt;
-  private $_picture;
   private $_id;
   public $last_saved = null;
 
@@ -37,9 +36,21 @@ class User
     return ($this->_pdo->query($sql)->fetchAll());
   }
 
-  public function get_pictures()
+  public function get_pictures($id_picture = -1)
   {
-    return ($this->_picture);
+    if ($id_picture >= 0)
+    {
+      $req = "SELECT id,path FROM picture WHERE id=:id_pic";
+      $params = array(":id_pic" => $id_picture);
+    }
+    else
+    {
+      $req = "SELECT path, id FROM picture WHERE id_user=:id";
+      $params = array(':id' => $this->_id);
+    }
+    $stmt = $this->_pdo->prepare($req);
+    $stmt->execute($params);
+    return ($stmt->fetchAll());
   }
 
   public function add_picture()
@@ -47,12 +58,22 @@ class User
     if ($this->_id)
     {
       $this->last_saved = uniqid($this->_id) . ".png";
-      $path = "public/pictures/user_pictures/" . $name;
+      $path = "public/pictures/user_pictures/" . $this->last_saved;
       $stmt = $this->_pdo->prepare("INSERT INTO picture (path, id_user) VALUES (:path, :id_user)");
       $stmt->execute(array(
         ':path' => $path,
         ':id_user' => $this->_id
       ));
+    }
+  }
+
+  public function delete_picture($id_picture)
+  {
+    $ret = $this->get_pictures($id_picture)[0];
+    if (!empty($ret))
+    {
+      $state = $this->_pdo->exec('DELETE FROM picture WHERE id=' . $ret['id']);
+      if ($state) { return(unlink("../" . $ret['path'])); } else { return ($state); };
     }
   }
 

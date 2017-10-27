@@ -41,6 +41,10 @@
 
 <canvas id="canvas" style="border: 1px solid black;"></canvas>
 
+<div class="review"></div>
+
+<script src="public/js/PopUp.class.js" charset="utf-8"></script>
+
 <script type="text/javascript">
 
 (function() {
@@ -68,11 +72,44 @@
   let color_picker = document.getElementsByClassName('color_picker')[0];
   let clean_filter = document.getElementsByClassName('clean_filter')[0];
   let clean_background = document.getElementsByClassName('clean_background')[0];
+  let review = document.getElementsByClassName('review')[0];
+  let pop_up = new PopUp();
 
   img.src = 'public/pictures/filtres/' + all_filters.options[all_filters.selectedIndex].value;
   img.onload = () => {
     f_context.drawImage(img, 0, 0, 80, 80);
   };
+
+  let get_user_picture = () => {
+    let xhr = new XMLHttpRequest();
+
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
+      {
+        review.innerHTML = xhr.response;
+        for (let i = 0; i < review.childNodes.length; i++)
+          review.childNodes[i].childNodes[1].addEventListener('click', (e) => {
+            let xhr2 = new XMLHttpRequest();
+
+            xhr2.onreadystatechange = () => {
+              if (xhr2.readyState == 4 && (xhr2.status == 200 || xhr2.status == 0))
+              {
+                if (xhr2.response == "1")
+                  get_user_picture();
+              }
+            }
+            xhr2.open('GET', 'controller/get_pictures.php?delete=' + review.childNodes[i].childNodes[1].getAttribute('id_picture'), true);
+            xhr2.send();
+          });
+      }
+    }
+
+    xhr.open('GET', 'controller/get_pictures.php', true);
+    xhr.send();
+  }
+
+  window.onload = get_user_picture();
 
   /**
    * Here the drag and drop comportement
@@ -177,6 +214,7 @@
             console.log(xml.response);
             if (xml.response > 0)
               console.log("picture correctly saved");
+            get_user_picture();
           }
         }
 

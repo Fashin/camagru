@@ -13,3 +13,9 @@
 #canvas { position: relative; top: 10vh; left: 26vw; width: 400px; height: 300px; display: block; }
 .upload_button { margin: 4vh 0 2vh 0; }
 .outils { height: 100%; width: 18vw; border: 1px solid black; float: left; text-align: center; margin-top: 6vh; }
+.review { display: inline-block; height: 100%; width: 14vw; border: 1px solid black; position: absolute; top: 12vh; right: 0; }
+.review .picture { margin-bottom: 10px; position: relative; }
+.review .picture img { width: 14vw; }
+.review .picture .delete { background: rgba(96, 107, 111, 0.5); opacity: 0; width: 14vw; height: 7vw; position: absolute; top: 0; cursor: pointer; }
+.review .picture .delete:hover { opacity: 1; }
+.review .picture .delete .bean { width: 5vw; margin-left: 5vw; }

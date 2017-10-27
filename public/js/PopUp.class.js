@@ -1,0 +1,9 @@
+class PopUp
+{
+
+  success(text)
+  {
+    
+  }
+
+}
