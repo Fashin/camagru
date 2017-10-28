@@ -32,6 +32,7 @@
       <input type="submit" name="apply_filter" value="Apply" class="apply_filter">
       <input type="submit" name="clean_canvas" value="Clean" class="clean_filter">
   </div>
+  <input type="file" name="imageLoader" id="imageLoader">
   <input class="upload_button" type="submit" name="send" value="Sauvegarder">
 </div>
 
@@ -74,6 +75,7 @@
   let clean_background = document.getElementsByClassName('clean_background')[0];
   let review = document.getElementsByClassName('review')[0];
   let pop_up = new PopUp();
+  let imageLoader = document.getElementById('imageLoader');
 
   img.src = 'public/pictures/filtres/' + all_filters.options[all_filters.selectedIndex].value;
   img.onload = () => {
@@ -115,6 +117,25 @@
   }
 
   window.onload = get_user_picture();
+
+  imageLoader.addEventListener('change', handleImage, false);
+
+  function handleImage(e)
+  {
+    let reader = new FileReader();
+
+    reader.onload = (evt) => {
+      let img = new Image();
+
+      img.onload = () => {
+        //img.width = '400px';
+        //img.height = '300px';
+        context.drawImage(img, 0, 0, 400, 300);
+      }
+      img.src = evt.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  }
 
   /**
    * Here the drag and drop comportement
