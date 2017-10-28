@@ -1,6 +1,7 @@
 <?php
 
-  require_once("../config/database.php");
+  if (isset($_GET['user_space']))
+    require_once("../config/database.php");
 
   if (isset($_SESSION['id']))
   {
@@ -18,13 +19,16 @@
       {
         $ret = $ret . '<div class="picture">';
           $ret = $ret . '<img src="' . $v['path'] . '"/>';
-          $ret = $ret . '<div class="delete" id_picture="' . $v['id'] . '"><img class="bean" src="public/pictures/bean.png"/></div>';
+          if (isset($_GET['user_space']))
+            $ret = $ret . '<div class="delete" id_picture="' . $v['id'] . '"><img class="bean" src="public/pictures/bean.png"/></div>';
         $ret = $ret . '</div>';
       }
       echo $ret;
     }
-    else
+    else if (isset($_GET['delete']))
       echo $user->delete_picture($_GET['delete']);
+    else
+      echo "-2";
   }
   else
     echo "-1";

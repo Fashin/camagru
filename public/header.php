@@ -18,7 +18,7 @@
   </head>
   <body>
     <header>
-      <span class="title">Camagru</span>
+      <a href="index.php"><span class="title">Camagru</span></a>
       <?php
 
         if ($is_connected)

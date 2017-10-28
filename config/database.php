@@ -5,8 +5,8 @@
     $DB_DSN = "mysql:host=localhost;";
     $DB_NAME = "camagru";
     $DB_USER = "root";
-    //$DB_PASSWORD = "Beauvois41";
-    $DB_PASSWORD = "";
+    $DB_PASSWORD = "Beauvois41";
+    //$DB_PASSWORD = "";
 
     try {
 

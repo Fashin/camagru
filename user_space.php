@@ -96,16 +96,21 @@
               if (xhr2.readyState == 4 && (xhr2.status == 200 || xhr2.status == 0))
               {
                 if (xhr2.response == "1")
+                {
                   get_user_picture();
+                  pop_up.display("Image supprimé", "success");
+                }
+                else
+                  pop_up.display("Erreur lors de la suppression de l'images", "error");
               }
             }
-            xhr2.open('GET', 'controller/get_pictures.php?delete=' + review.childNodes[i].childNodes[1].getAttribute('id_picture'), true);
+            xhr2.open('GET', 'controller/get_pictures.php?delete=' + review.childNodes[i].childNodes[1].getAttribute('id_picture') + "&user_space", true);
             xhr2.send();
           });
       }
     }
 
-    xhr.open('GET', 'controller/get_pictures.php', true);
+    xhr.open('GET', 'controller/get_pictures.php?user_space', true);
     xhr.send();
   }
 
@@ -122,6 +127,7 @@
      if (type == 'drag')
         f_context.drawImage(m_img, prop_img.x, prop_img.y, prop_img.width, prop_img.height);
      else if (type == 'resize')
+
        f_context.drawImage(m_img, prop_img.x, prop_img.y, prop_img.width, prop_img.height);
    }
 
@@ -187,7 +193,7 @@
      });
    }
    else
-    console.log("your navigator don't support camera");
+    pop_up.display("your navigator don't support camera", "error");
    document.getElementById('startbutton').addEventListener('click', () => {
      context.drawImage(video, 0, 0, canvas.width, canvas.height);
      context.drawImage(bg_canvas, 0, 0, canvas.width, canvas.height);
@@ -205,15 +211,14 @@
       blank.width = canvas.width;
       blank.height = canvas.height;
       if (canvas.toDataURL() == blank.toDataURL())
-        console.log("please take or upload a picture");
+        pop_up.display("please take or upload a picture", "error");
       else
       {
         xml.onreadystatechange = () => {
           if (xml.readyState == 4 && (xml.status == 200 || xml.status == 0))
           {
-            console.log(xml.response);
-            if (xml.response > 0)
-              console.log("picture correctly saved");
+            if (xml.response)
+              pop_up.display("Image correctement sauver", "success");
             get_user_picture();
           }
         }

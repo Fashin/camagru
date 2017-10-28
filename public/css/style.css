@@ -2,7 +2,7 @@ html, body { margin: 0; padding: 0; }
 
 header { display: block; background: #4074A5; height: 6vh; color: white; }
 
-header .title {font-size: 5vh; float: left; }
+header .title {font-size: 5vh; float: left; color: white; text-decoration: none; }
 
 header .register, .signin {float: right; cursor: pointer; color: white; text-decoration: none; margin: 1.5vh 2vw 0 0; }
 
@@ -15,3 +15,18 @@ header .personal_space:hover { text-decoration: underline; }
 header .logout { color: white; float: right; margin: 1.5vh 2vw 0 0; text-decoration: none; cursor: pointer; }
 
 header .logout:hover { text-decoration: underline; }
+
+.pop_up
+{
+  -moz-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -webkit-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -o-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  box-shadow: 1px 1px 10px 1px #9B9B9B;
+  position: absolute; top: 20vh; left: 34vw;
+  z-index: 1;
+  height: 38.7vh; width: 26.5vw;
+}
+
+.pop_up img { height: 26.5vw; height: 38.6vh; }
+
+.pop_up-text { position: absolute; top: 28vh; left: 7vw; z-index: 1; }
