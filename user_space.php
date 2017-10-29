@@ -128,9 +128,8 @@
       let img = new Image();
 
       img.onload = () => {
-        //img.width = '400px';
-        //img.height = '300px';
-        context.drawImage(img, 0, 0, 400, 300);
+        //video.currentSrc = img;
+        //context.drawImage(img, 0, 0, 400, 300);
       }
       img.src = evt.target.result;
     }
@@ -148,7 +147,6 @@
      if (type == 'drag')
         f_context.drawImage(m_img, prop_img.x, prop_img.y, prop_img.width, prop_img.height);
      else if (type == 'resize')
-
        f_context.drawImage(m_img, prop_img.x, prop_img.y, prop_img.width, prop_img.height);
    }
 
@@ -238,6 +236,7 @@
         xml.onreadystatechange = () => {
           if (xml.readyState == 4 && (xml.status == 200 || xml.status == 0))
           {
+            console.log(xml.response);
             if (xml.response)
               pop_up.display("Image correctement sauver", "success");
             get_user_picture();

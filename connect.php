@@ -2,6 +2,8 @@
 
   require_once("config/database.php");
 
+  //var_dump($db);
+
   if (isset($_POST['log_in-send']))
   {
     if (isset($_POST['log_in']) && !empty($_POST['log_in'])
