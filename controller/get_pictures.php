@@ -30,13 +30,17 @@
     else
       echo "-2";
   }
-  else if (isset($page) && $page == "homepage")
+  else if (isset($page) && $page[0] == "homepage")
   {
-    $ret = $db->query('SELECT * FROM picture');
+    $ret = $db->query('SELECT * FROM picture ORDER BY time DESC limit ' . $page[1][0] . ', ' . $page[1][1]);
     $pic = $ret->fetchAll();
     foreach ($pic as $k => $v)
     {
-      echo "<img src=" . $v['path'] . ">";
+      echo "<div id='picture-container'>";
+        echo "<img src=" . $v['path'] . "><br>";
+        echo "<img src='public/pictures/empty_hearth.png' class='hearth'>";
+        echo "<textarea></textarea>";
+      echo "</div>";
     }
   }
   else

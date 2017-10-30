@@ -32,13 +32,14 @@
       $sql = "CREATE TABLE IF NOT EXISTS interract (
               id int(11) AUTO_INCREMENT PRIMARY KEY,
               type VARCHAR(255) NOT NULL,
-              id_user INT);";
+              id_picture INT);";
       $db->exec($sql);
 
       $sql = "CREATE TABLE IF NOT EXISTS picture (
               id int (11) AUTO_INCREMENT PRIMARY KEY,
               path VARCHAR(255) NOT NULL,
-              id_user INT);";
+              id_user INT,
+              time timestamp on update current_timestamp not null default current_timestamp);";
 
       $db->exec($sql);
 
