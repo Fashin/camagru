@@ -128,8 +128,15 @@
       let img = new Image();
 
       img.onload = () => {
-        //video.currentSrc = img;
-        //context.drawImage(img, 0, 0, 400, 300);
+        let r_canvas = document.createElement('canvas');
+        let r_context = r_canvas.getContext('2d');
+
+        r_canvas.setAttribute('id', 'video');
+        r_canvas.setAttribute('type', 'picture');
+        video.remove();
+        document.body.insertBefore(r_canvas, document.getElementsByClassName('outils')[0]);
+        video = r_canvas;
+        r_context.drawImage(img, 0, 0, 400, 300);
       }
       img.src = evt.target.result;
     }
@@ -213,6 +220,7 @@
    }
    else
     pop_up.display("your navigator don't support camera", "error");
+
    document.getElementById('startbutton').addEventListener('click', () => {
      context.drawImage(video, 0, 0, canvas.width, canvas.height);
      context.drawImage(bg_canvas, 0, 0, canvas.width, canvas.height);

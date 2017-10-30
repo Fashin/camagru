@@ -1,4 +1,4 @@
-#video { position: relative; top: 6vh; left: 8vw; height: 300px; }
+#video { position: relative; top: 6vh; left: 8vw; height: 300px; width: 400px; }
 #filtres, #background_filter { position: absolute; border: 1px solid red; top: 12vh; left: 26vw; width: 400px; height: 300px; }
 #startbutton
 {

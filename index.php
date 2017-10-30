@@ -4,6 +4,8 @@
 
   require_once("public/header.php");
 
+  $page = "homepage";
+
   require_once("controller/get_pictures.php");
 
 ?>

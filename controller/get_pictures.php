@@ -3,7 +3,7 @@
   if (isset($_GET['user_space']))
     require_once("../config/database.php");
 
-  if (isset($_SESSION['id']))
+  if (isset($_SESSION['id']) && !isset($page))
   {
     require_once("User.class.php");
 
@@ -29,6 +29,15 @@
       echo $user->delete_picture($_GET['delete']);
     else
       echo "-2";
+  }
+  else if (isset($page) && $page == "homepage")
+  {
+    $ret = $db->query('SELECT * FROM picture');
+    $pic = $ret->fetchAll();
+    foreach ($pic as $k => $v)
+    {
+      echo "<img src=" . $v['path'] . ">";
+    }
   }
   else
     echo "-1";

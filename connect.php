@@ -2,8 +2,6 @@
 
   require_once("config/database.php");
 
-  //var_dump($db);
-
   if (isset($_POST['log_in-send']))
   {
     if (isset($_POST['log_in']) && !empty($_POST['log_in'])
@@ -14,8 +12,8 @@
         $psswd = htmlspecialchars($_POST['psswd']);
         $user = new User($db);
         $rep = $user->get_user(null, array("login"=>$login, "psswd"=>$psswd));
-        if ($rep)
-          $user->connect($rep[0], 'index.php');
+        if ($rep && isset($rep[0]['id']))
+          $user->connect($rep[0]['id'], 'index.php');
         else
           header('Location:connect.php?error=log_in');
       }
