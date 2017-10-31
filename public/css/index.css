@@ -1,3 +1,11 @@
-#picture-container {}
+#picture-container { margin: 1vh 0 0 40vw; display: inline-block; }
+
+#picture-container .send { height: 30px; cursor: pointer; float: right; }
+
+#picture-container .comment { height: 20px; width: 295px; border-radius: 10px; outline: none; }
 
 #picture-container .hearth { height: 30px; width: 30px; cursor: pointer; }
+
+#picture-container .interract-container .interract .pseudo { color : #4074A5; }
+
+#picture-container .interract-container .interract .value { float: right; margin-right: 32px; }

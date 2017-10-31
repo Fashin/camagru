@@ -10,12 +10,10 @@
     if ($ret)
     {
       $login = $db->query("SELECT login FROM user WHERE id=" . $_SESSION['id'])->fetchAll()[0]['login'];
-      $return = "<div class='interract'>";
-        $return .= "<span class='pseudo'>" . $login . "</span>";
-        $return .= "<span class='value'>" . $ret . "</span>";
-        $return .= "<a href='#'>modifier</a>";
-        $return .= "<a href='#'>supprimer</a>";
-      $return .= "</div>";
+      $return = "<span class='pseudo'>" . $login . "</span>";
+      $return .= "<span class='value'>" . $ret . "</span>";
+      $return .= "<a href='#'>modifier</a>";
+      $return .= "<a href='#'>supprimer</a>";
       return ($return);
     }
     else

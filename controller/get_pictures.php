@@ -3,12 +3,13 @@
   if (!(isset($db)))
     require_once '../config/database.php';
 
-  $page = (isset($_GET['picture']) && isset($_GET['range_start']) && isset($_GET['range_end'])) ? array($_GET['range_start'], $_GET['range_end']) : $page;
+  if (isset($_GET['picture']) && isset($_GET['range_start']) && isset($_GET['range_end']))
+    $page = array($_GET['range_start'], $_GET['range_end']);
 
   if (isset($_GET['user_space']))
     require_once("../config/database.php");
 
-  if (isset($_SESSION['id']) && !isset($page))
+  if (isset($_SESSION['id']) && isset($_GET['user_space']))
   {
     require_once("User.class.php");
 
@@ -35,7 +36,7 @@
     else
       echo "-2";
   }
-  else if (is_array($page))
+  else if (isset($page) && is_array($page))
   {
     $ret = $db->query('SELECT * FROM picture ORDER BY time DESC limit ' . $page[0] . ', ' . $page[1]);
     $pic = $ret->fetchAll();
@@ -75,7 +76,7 @@
             {
               echo "<div class='interract'>";
                 echo "<span class='pseudo'>" . $v['login'] . "</span>";
-                echo "<span class='value'>" . $v['value'] . "</span>";
+                echo "<span class='value'>" . $v['value'] . "</span><br>";
                 if (isset($_SESSION['id']) && $v['id_user'] == $_SESSION['id'])
                 {
                   echo "<a href='#'>modifier</a>";
@@ -86,8 +87,8 @@
           }
           echo "</div>";
         }
-        echo "<textarea class='comment'></textarea>";
-        echo "<input type='submit' name='send' value='envoyer' class='send'/>";
+        echo "<input type='text' placeholder='Votre commentaire...' class='comment'/>";
+        echo "<img class='send' src='public/pictures/arrow.png'/>";
       echo "</div>";
     }
   }
