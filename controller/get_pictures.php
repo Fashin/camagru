@@ -1,5 +1,10 @@
 <?php
 
+  if (!(isset($db)))
+    require_once '../config/database.php';
+
+  $page = (isset($_GET['picture']) && isset($_GET['range_start']) && isset($_GET['range_end'])) ? array($_GET['range_start'], $_GET['range_end']) : $page;
+
   if (isset($_GET['user_space']))
     require_once("../config/database.php");
 
@@ -30,16 +35,59 @@
     else
       echo "-2";
   }
-  else if (isset($page) && $page[0] == "homepage")
+  else if (is_array($page))
   {
-    $ret = $db->query('SELECT * FROM picture ORDER BY time DESC limit ' . $page[1][0] . ', ' . $page[1][1]);
+    $ret = $db->query('SELECT * FROM picture ORDER BY time DESC limit ' . $page[0] . ', ' . $page[1]);
     $pic = $ret->fetchAll();
     foreach ($pic as $k => $v)
     {
-      echo "<div id='picture-container'>";
+      echo "<div id='picture-container' id_picture='". $v['id'] . "'>";
         echo "<img src=" . $v['path'] . "><br>";
-        echo "<img src='public/pictures/empty_hearth.png' class='hearth'>";
-        echo "<textarea></textarea>";
+        if (isset($_SESSION['id']))
+        {
+          $req = $db->prepare("SELECT id FROM interract WHERE id_user=:id_user AND id_picture=:id_picture AND type='like'");
+          $bool = $req->execute(array(
+            ':id_user' => $_SESSION['id'],
+            ':id_picture' => $v['id']
+          ));
+          $id = 0;
+          if (!empty($ret = $req->fetchAll()))
+            $id = $ret[0]['id'];
+          if (!empty($id))
+            echo "<img id_interract='" . $id . "' src='public/pictures/fill_hearth.png' class='hearth'>";
+          else
+            echo "<img id_interract='-1' src='public/pictures/empty_hearth.png' class='hearth'>";
+          $req->closeCursor();
+        }
+        else
+          echo "<img src='public/pictures/empty_hearth.png' class='hearth'>";
+        $req = $db->query("
+          SELECT user.login, interract.*
+          FROM user INNER JOIN interract
+          WHERE interract.id_picture=" . $v['id'] . " AND interract.type='comment' AND user.id=interract.id_user
+          ");
+        if ($req && !empty($req))
+        {
+          echo "<div class='interract-container'>";
+          while ($ret = $req->fetchAll())
+          {
+            foreach ($ret as $k => $v)
+            {
+              echo "<div class='interract'>";
+                echo "<span class='pseudo'>" . $v['login'] . "</span>";
+                echo "<span class='value'>" . $v['value'] . "</span>";
+                if (isset($_SESSION['id']) && $v['id_user'] == $_SESSION['id'])
+                {
+                  echo "<a href='#'>modifier</a>";
+                  echo "<a href='#'>supprimer</a>";
+                }
+              echo "</div>";
+            }
+          }
+          echo "</div>";
+        }
+        echo "<textarea class='comment'></textarea>";
+        echo "<input type='submit' name='send' value='envoyer' class='send'/>";
       echo "</div>";
     }
   }

@@ -2,11 +2,11 @@
 
     session_start();
 
-    $DB_DSN = "mysql:host=localhost;";
+    $DB_DSN = "mysql:host=127.0.0.1;port=3306;";
     $DB_NAME = "camagru";
     $DB_USER = "root";
-    //$DB_PASSWORD = "Beauvois41";
-    $DB_PASSWORD = "";
+    $DB_PASSWORD = "Beauvois41";
+    //$DB_PASSWORD = "";
 
     try {
 
@@ -32,7 +32,9 @@
       $sql = "CREATE TABLE IF NOT EXISTS interract (
               id int(11) AUTO_INCREMENT PRIMARY KEY,
               type VARCHAR(255) NOT NULL,
-              id_picture INT);";
+              id_picture INT NOT NULL,
+              id_user INT NOT NULL,
+              value VARCHAR(255) NOT NULL);";
       $db->exec($sql);
 
       $sql = "CREATE TABLE IF NOT EXISTS picture (

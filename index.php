@@ -4,8 +4,8 @@
 
   require_once("public/header.php");
 
-  $page[] = "homepage";
-  $page[] = array(0, 10);
+  $page[0] = 0;
+  $page[1] = 10;
 
   require_once("controller/get_pictures.php");
 
@@ -13,7 +13,82 @@
 
 <script type="text/javascript">
 
-  
+  let xhr = new XMLHttpRequest();
+  let range = [0, 10];
+  let hearth = document.getElementsByClassName('hearth');
+  let send = document.getElementsByClassName('send');
+
+  document.addEventListener('scroll', (e) => {
+    let scrollY = window.scrollY;
+    let body = document.body;
+    let html = document.documentElement;
+    let clientPos = body.scrollHeight - html.clientHeight;
+
+    if (scrollY >= clientPos)
+    {
+      range[0] += 10;
+      range[1] += 10;
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
+        {
+          document.body.innerHTML += xhr.response;
+        }
+      }
+      xhr.open('GET', 'controller/get_pictures.php?picture=true&range_start=' + range[0] + '&range_end=' + range[1]);
+      xhr.send();
+    }
+  });
+
+  for (let i = 0; i < hearth.length; i++)
+    hearth[i].addEventListener('click', (e) => {
+      let id = hearth[i].parentNode.getAttribute('id_picture');
+      let state = (hearth[i].getAttribute('src').split('/')[2] == 'empty_hearth.png') ? 0 : 1;
+      let id_interract = hearth[i].getAttribute('id_interract');
+
+      xhr.onreadystatechange = (e) => {
+        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
+        {
+          if (state)
+            hearth[i].setAttribute('src', 'public/pictures/empty_hearth.png');
+          else
+            hearth[i].setAttribute('src', 'public/pictures/fill_hearth.png');
+          if (id_interract == -1)
+            hearth[i].setAttribute('id_interract', xhr.response);
+          else
+            hearth[i].setAttribute('id_interract', "-1");
+        }
+      }
+
+      xhr.open('POST', 'controller/update_interract.php');
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.send("id=" + id + "&state=" + state + "&type=like" + "&id_interract=" + id_interract);
+    });
+
+  for (let i = 0; i < send.length; i++)
+    send[i].addEventListener('click', (e) => {
+      let parent = send[i].parentNode;
+      let id = parent.getAttribute('id_picture');
+      let textarea = parent.getElementsByClassName('comment')[0]
+      let value = textarea.value
+
+      if (value != "")
+      {
+        xhr.onreadystatechange = (e) => {
+          if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
+          {
+            let el = document.createElement('div');
+
+            el.setAttribute('class', 'interract');
+            el.innerHTML = xhr.response;
+            parent.getElementsByClassName('interract-container')[0].append(el);
+            textarea.value = "";
+          }
+        }
+        xhr.open('POST', 'controller/update_interract.php');
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send("id=" + id + "&value=" + value + "&type=comment&state=1&id_interract=-1");
+      }
+    });
 
 </script>
 
