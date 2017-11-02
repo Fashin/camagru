@@ -76,12 +76,21 @@
         xhr.onreadystatechange = (e) => {
           if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
           {
-            let el = document.createElement('div');
+            if (xhr.response == "-2")
+              window.location.href= "connect.php";
+            else
+            {
+              let el = document.createElement('div');
 
-            el.setAttribute('class', 'interract');
-            el.innerHTML = xhr.response;
-            parent.getElementsByClassName('interract-container')[0].append(el);
-            textarea.value = "";
+              el.setAttribute('class', 'interract');
+              el.innerHTML = xhr.response;
+              textarea.value = "";
+              if (parent.getElementsByClassName('interract-container')[0].childNodes.length % 2)
+                el.setAttribute('class', el.getAttribute('class') + ' interract-pair');
+              else
+                el.setAttribute('class', el.getAttribute('class') + ' interract-impair');
+              parent.getElementsByClassName('interract-container')[0].append(el);
+            }
           }
         }
         xhr.open('POST', 'controller/update_interract.php');

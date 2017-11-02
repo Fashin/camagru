@@ -3,9 +3,9 @@
 #startbutton
 {
   background-image: url("../pictures/take_picture.png");
-  background-size: 5vw 11vh;
+  background-size: 50px 50px;
   background-repeat: no-repeat;
-  height: 11vh; width: 5vw;
+  height: 50px; width: 50px;
   display: inline-block;
   cursor: pointer;
 }

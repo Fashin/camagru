@@ -1,6 +1,6 @@
 <?php
 
-  require_once("config/database.php");
+  session_start();
 
   if (!($_SESSION['id']))
     header('Location:connect.php');
@@ -33,14 +33,11 @@
       <input type="submit" name="clean_canvas" value="Clean" class="clean_filter">
   </div>
   <input type="file" name="imageLoader" id="imageLoader">
-  <input class="upload_button" type="submit" name="send" value="Sauvegarder">
 </div>
 
 <video id="video"></video>
 <canvas id="background_filter"></canvas>
 <canvas id="filtres"></canvas>
-
-<canvas id="canvas" style="border: 1px solid black;"></canvas>
 
 <div class="review"></div>
 
@@ -51,8 +48,6 @@
 (function() {
 
   let video = document.getElementById('video');
-  let canvas = document.getElementById('canvas');
-  let context = canvas.getContext('2d');
   let f_canvas = document.getElementById('filtres');
   let f_context = f_canvas.getContext('2d');
   let bg_canvas = document.getElementById('background_filter');
@@ -157,7 +152,7 @@
        f_context.drawImage(m_img, prop_img.x, prop_img.y, prop_img.width, prop_img.height);
    }
 
-   function getMousePos(canvas, evt)
+   function getMousePos(evt)
    {
      let  rect = f_canvas.getBoundingClientRect();
 
@@ -178,7 +173,7 @@
      let prop;
 
      if (dragging || key_pressed)
-        prop = getMousePos(canvas, e, img)
+        prop = getMousePos(e)
       if (dragging)
       {
         prop_img.x = prop.x;
@@ -222,40 +217,42 @@
     pop_up.display("your navigator don't support camera", "error");
 
    document.getElementById('startbutton').addEventListener('click', () => {
-     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-     context.drawImage(bg_canvas, 0, 0, canvas.width, canvas.height);
-     context.drawImage(img, prop_img.x, prop_img.y, prop_img.width, prop_img.height);
-   });
+     let xml = new XMLHttpRequest();
+     let send_filtre = f_canvas.toDataURL();
+     let send_bg_filtre = bg_canvas.toDataURL();
+     let send_background = document.createElement('img');
+     let blank = document.createElement('canvas');
+     let tmp_canvas = document.createElement('canvas');
 
-   /**
-    * Here the upload comporment
-    */
-    upload_button.addEventListener('click', (e) => {
-      let xml = new XMLHttpRequest();
-      let picture_upload = canvas.toDataURL("image/png");
-      let blank = document.createElement('canvas');
-
-      blank.width = canvas.width;
-      blank.height = canvas.height;
-      if (canvas.toDataURL() == blank.toDataURL())
-        pop_up.display("please take or upload a picture", "error");
+      if (video.getAttribute('type') == null)
+        tmp_canvas.getContext('2d').drawImage(video, 0, 0, tmp_canvas.width, tmp_canvas.height)
       else
-      {
-        xml.onreadystatechange = () => {
-          if (xml.readyState == 4 && (xml.status == 200 || xml.status == 0))
-          {
-            console.log(xml.response);
-            if (xml.response)
-              pop_up.display("Image correctement sauver", "success");
-            get_user_picture();
-          }
-        }
+        tmp_canvas = video;
+     send_background = tmp_canvas.toDataURL();
 
-        xml.open('POST', 'controller/put_pictures.php', true);
-        xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xml.send("img=" + picture_upload);
-      }
-    });
+     blank.width = tmp_canvas.width;
+     blank.height = tmp_canvas.height;
+     if (tmp_canvas.toDataURL() == blank.toDataURL())
+       pop_up.display("please take or upload a picture", "error");
+     else
+     {
+       xml.onreadystatechange = () => {
+         if (xml.readyState == 4 && (xml.status == 200 || xml.status == 0))
+         {
+           console.log(xml.response);
+           if (xml.response > 0)
+             pop_up.display("Image correctement sauver", "success");
+            else
+              pop_up.display("Failed to save the picture", "error");
+           get_user_picture();
+         }
+       }
+
+       xml.open('POST', 'controller/put_pictures.php', true);
+       xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+       xml.send("img_background=" + send_background + "&filtre_background=" + send_filtre + "&filtre_bg_background="+send_bg_filtre);
+     }
+   });
 
     /**
      * Here the apply filter & background comportment
