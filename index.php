@@ -17,6 +17,8 @@
   let range = [0, 10];
   let hearth = document.getElementsByClassName('hearth');
   let send = document.getElementsByClassName('send');
+  let interract = document.getElementsByClassName('interract-container');
+
 
   document.addEventListener('scroll', (e) => {
     let scrollY = window.scrollY;
@@ -71,7 +73,7 @@
       let textarea = parent.getElementsByClassName('comment')[0]
       let value = textarea.value
 
-      if (value != "")
+      if (value != "" && value.length < 255)
       {
         xhr.onreadystatechange = (e) => {
           if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
@@ -98,6 +100,49 @@
         xhr.send("id=" + id + "&value=" + value + "&type=comment&state=1&id_interract=-1");
       }
     });
+
+  for (let i = 0; i < interract.length; i++)
+  {
+    interract[i].addEventListener('click', (e) => {
+      let el = e.srcElement;
+      let my_class = el.getAttribute('class');
+      let parent = null;
+
+      if (my_class == "pseudo" || my_class == "value" || my_class == "hidden")
+        parent = el.parentElement;
+      else if (my_class == "modify_comment" || my_class == "delete_comment")
+        parent = el.parentElement.parentElement;
+      else if (my_class == "interract interract-pair" || my_class == "interract interract-impair")
+        parent = el;
+      if (parent && parent.childNodes[3] !== undefined)
+      {
+        let style = window.getComputedStyle(parent.childNodes[3]);
+        if (style.display == "none")
+          parent.childNodes[3].style.display = "inline-block";
+        else
+          parent.childNodes[3].style.display = "none";
+      }
+      else
+        console.log("no children");
+    });
+    for (let j = 0; j < interract[i].childNodes.length; j++)
+    {
+      let el = interract[i].childNodes[j].getElementsByClassName('hidden')[0];
+      if (el !== undefined)
+      {
+        let my_modify = el.childNodes[1];
+        let my_delete = el.childNodes[2];
+
+        my_modify.addEventListener('click', (e) => {
+          console.log("modify text");
+        });
+
+        my_delete.addEventListener('click', (e) => {
+          console.log("delete comment");
+        });
+      }
+    }
+  }
 
 </script>
 

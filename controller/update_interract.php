@@ -12,10 +12,11 @@
       $login = $db->query("SELECT login FROM user WHERE id=" . $_SESSION['id'])->fetchAll()[0]['login'];
       $return = "<span class='pseudo'>" . $login . "</span>";
       $return .= "<span class='value'>" . $ret . "</span>";
-      $return .= "<span class='hidded'>";
-        $return .= "<a href='#'>modifier</a>";
-        $return .= "<a href='#'>supprimer</a>";
-      $return .= "</span>";
+      $return .= "<div class='hidden'>";
+        $return .= "<input type='hidden' value='" . $v['id'] . "'>";
+        $return .= "<img src='public/pictures/modify_icon.png' class='modify_comment'/>";
+        $return .= "<img src='public/pictures/delete_icon.png' class='delete_comment'/>";
+      $return .= "</div>";
       return ($return);
     }
     else

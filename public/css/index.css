@@ -1,4 +1,17 @@
-#picture-container { margin: 1vh 0 0 40vw; display: inline-block; }
+#picture-container
+{
+  margin: 1vh 0 0 40vw;
+  display: inline-block;
+  -moz-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -webkit-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -o-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  box-shadow: 1px 1px 10px 1px #9B9B9B;
+  text-align: center;
+  z-index: 1;
+  width: 30vw;
+}
+
+#picture-container .picture { margin-top: 2vh; }
 
 #picture-container .send { height: 30px; cursor: pointer; float: right; }
 
@@ -6,6 +19,20 @@
 
 #picture-container .hearth { height: 30px; width: 30px; cursor: pointer; }
 
+#picture-container .interract-container .interract { word-wrap: break-word; text-overflow: ellipsis; height: 7vh; width: 30vw; position: relative; cursor: pointer; }
+
+#picture-container .interract-container .interract:hover { border: 1px solid lightgrey; }
+
 #picture-container .interract-container .interract .pseudo { color : #4074A5; }
 
-#picture-container .interract-container .interract .value { float: right; margin-right: 32px; }
+#picture-container .interract-container .interract .value { text-align: right; display: block; }
+
+#picture-container .interract-container .interract-pair { background: #D2E1FF; }
+
+#picture-container .interract-container .interract-impair { background: #BDCBE5; }
+
+#picture-container .interract-container .interract .hidden { background: white; position: absolute; top: 0; right: 0; border-radius: 25px; height: 25px; width: 55px; display: none; }
+
+#picture-container .interract-container .interract .hidden .modify_comment { height: 20px; width: 20px; cursor: pointer; }
+
+#picture-container .interract-container .interract .hidden .delete_comment { height: 20px; width: 20px; cursor: pointer; }

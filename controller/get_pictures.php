@@ -43,7 +43,7 @@
     foreach ($pic as $k => $v)
     {
       echo "<div id='picture-container' id_picture='". $v['id'] . "'>";
-        echo "<img src=" . $v['path'] . "><br>";
+        echo "<img src=" . $v['path'] . " class='picture'><br>";
         if (isset($_SESSION['id']))
         {
           $req = $db->prepare("SELECT id FROM interract WHERE id_user=:id_user AND id_picture=:id_picture AND type='like'");
@@ -74,15 +74,21 @@
           {
             foreach ($ret as $k => $v)
             {
-              echo "<div class='interract'>";
-                echo "<span class='pseudo'>" . $v['login'] . "</span>";
-                echo "<span class='value'>" . $v['value'] . "</span><br>";
-                if (isset($_SESSION['id']) && $v['id_user'] == $_SESSION['id'])
-                {
-                  echo "<a href='#'>modifier</a>";
-                  echo "<a href='#'>supprimer</a>";
-                }
-              echo "</div>";
+              if ($k % 2)
+                echo "<div class='interract interract-pair'>";
+              else
+                echo "<div class='interract interract-impair'>";
+                  echo "<span class='pseudo'>" . $v['login'] . "</span><br>";
+                  echo "<span class='value'>" . $v['value'] . "</span>";
+                  if (isset($_SESSION['id']) && $v['id_user'] == $_SESSION['id'])
+                  {
+                    echo "<div class='hidden'>";
+                      echo "<input type='hidden' value='" . $v['id'] . "'>";
+                      echo "<img src='public/pictures/modify_icon.png' class='modify_comment'/>";
+                      echo "<img src='public/pictures/delete_icon.png' class='delete_comment'/>";
+                    echo "</div>";
+                  }
+                echo "</div>";
             }
           }
           echo "</div>";

@@ -239,8 +239,7 @@
        xml.onreadystatechange = () => {
          if (xml.readyState == 4 && (xml.status == 200 || xml.status == 0))
          {
-           console.log(xml.response);
-           if (xml.response > 0)
+           if (xml.response != "-1")
              pop_up.display("Image correctement sauver", "success");
             else
               pop_up.display("Failed to save the picture", "error");
