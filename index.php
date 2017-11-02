@@ -122,23 +122,23 @@
         else
           parent.childNodes[3].style.display = "none";
       }
-      else
-        console.log("no children");
     });
     for (let j = 0; j < interract[i].childNodes.length; j++)
     {
       let el = interract[i].childNodes[j].getElementsByClassName('hidden')[0];
       if (el !== undefined)
       {
+        let id = el.childNodes[0].value;
         let my_modify = el.childNodes[1];
         let my_delete = el.childNodes[2];
 
         my_modify.addEventListener('click', (e) => {
-          console.log("modify text");
+          //modifier l'element class="value" d'un span vers un input, envoie de la modification avec la touche entrée
+          //puis envoie avec une request xhr en update via l'id
         });
 
         my_delete.addEventListener('click', (e) => {
-          console.log("delete comment");
+          //une alerte avec confirmation puis envoie xhr avec id
         });
       }
     }
