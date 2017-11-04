@@ -50,19 +50,39 @@
       else if ($type == "comment")
       {
         $val = htmlspecialchars($_POST['value']);
-        $params = array(
-          ':id_picture' => $id,
-          ':id_user' => $_SESSION['id'],
-          ':type' => $type,
-          ':value' => $val
-        );
-        echo insert_interract($params, $db, $val);
+        $request = (isset($_POST['request'])) ? htmlspecialchars($_POST['request']) : NULL;
+        if ($request)
+        {
+          if ($request == 'UPDATE')
+          {
+            $req = $db->prepare("UPDATE interract SET value=:value WHERE id=:id");
+            echo $req->execute(array(
+              ':id' => $id,
+              ':value' => $val
+            ));
+          }
+          else if ($request == 'DELETE')
+            echo $db->exec('DELETE FROM interract WHERE id=' . $id);
+          else
+            echo "0";
+        }
+        else
+        {
+
+          $params = array(
+            ':id_picture' => $id,
+            ':id_user' => $_SESSION['id'],
+            ':type' => $type,
+            ':value' => $val
+          );
+          echo insert_interract($params, $db, $val);
+        }
       }
     }
     else
       echo "-2";
   }
   else
-    echo "-1";
+    print_r($_POST);
 
 ?>

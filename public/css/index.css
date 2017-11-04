@@ -11,11 +11,11 @@
   width: 30vw;
 }
 
-#picture-container .picture { margin-top: 2vh; }
+#picture-container .picture { margin-top: 2vh; width: 28vw; }
 
-#picture-container .send { height: 30px; cursor: pointer; float: right; }
+#picture-container .send { height: 4vh; width: 3vw; cursor: pointer; float: right; }
 
-#picture-container .comment { height: 20px; width: 295px; border-radius: 10px; outline: none; }
+#picture-container .comment { height: 3vh; width: 26vw; border-radius: 10px; outline: none; }
 
 #picture-container .hearth { height: 30px; width: 30px; cursor: pointer; }
 
