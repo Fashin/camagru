@@ -21,6 +21,8 @@
     let interract = document.getElementsByClassName('interract-container');
 
 
+    binding_func();
+
     document.addEventListener('scroll', (e) => {
       let scrollY = window.scrollY;
       let body = document.body;
@@ -34,14 +36,26 @@
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
           {
-            document.body.innerHTML += xhr.response;
-            location.reload();
+            if (xhr.response.length > 0)
+            {
+              document.body.insertAdjacentHTML('beforeend', xhr.response);
+              binding_func();
+            }
           }
         }
         xhr.open('GET', 'controller/get_pictures.php?picture=true&range_start=' + range[0] + '&range_end=' + range[1]);
         xhr.send();
       }
     });
+  }
+
+  let binding_func = () => {
+
+    let hearth = document.getElementsByClassName('hearth');
+    let send = document.getElementsByClassName('send');
+    let interract = document.getElementsByClassName('interract-container');
+    let xhr = new XMLHttpRequest();
+
 
     for (let i = 0; i < hearth.length; i++)
       hearth[i].addEventListener('click', (e) => {
@@ -69,40 +83,46 @@
       });
 
     for (let i = 0; i < send.length; i++)
-      send[i].addEventListener('click', (e) => {
-        let parent = send[i].parentNode;
-        let id = parent.getAttribute('id_picture');
-        let textarea = parent.getElementsByClassName('comment')[0]
-        let value = textarea.value
+    {
+      if (send[i].getAttribute('is_bind') == undefined)
+      {
+        send[i].addEventListener('click', (e) => {
+          let parent = send[i].parentNode;
+          let id = parent.getAttribute('id_picture');
+          let textarea = parent.getElementsByClassName('comment')[0]
+          let value = textarea.value
 
-        if (value != "" && value.length < 255)
-        {
-          xhr.onreadystatechange = (e) => {
-            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
-            {
-              if (xhr.response == "-2")
-                window.location.href= "connect.php";
-              else
+          if (value != "" && value.length < 255)
+          {
+            xhr.onreadystatechange = (e) => {
+              if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
               {
-                let el = document.createElement('div');
-
-                el.setAttribute('class', 'interract');
-                el.innerHTML = xhr.response;
-                textarea.value = "";
-                if (parent.getElementsByClassName('interract-container')[0].childNodes.length % 2)
-                  el.setAttribute('class', el.getAttribute('class') + ' interract-pair');
+                if (xhr.response == "-2")
+                  window.location.href= "connect.php";
                 else
-                  el.setAttribute('class', el.getAttribute('class') + ' interract-impair');
-                parent.getElementsByClassName('interract-container')[0].append(el);
-                location.reload();
+                {
+                  let el = document.createElement('div');
+
+                  el.setAttribute('class', 'interract');
+                  el.innerHTML = xhr.response;
+                  textarea.value = "";
+                  if (parent.getElementsByClassName('interract-container')[0].childNodes.length % 2)
+                    el.setAttribute('class', el.getAttribute('class') + ' interract-pair');
+                  else
+                    el.setAttribute('class', el.getAttribute('class') + ' interract-impair');
+                  parent.getElementsByClassName('interract-container')[0].append(el);
+                  location.reload();
+                }
               }
             }
+            xhr.open('POST', 'controller/update_interract.php');
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("id=" + id + "&value=" + value + "&type=comment&state=1&id_interract=-1");
           }
-          xhr.open('POST', 'controller/update_interract.php');
-          xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-          xhr.send("id=" + id + "&value=" + value + "&type=comment&state=1&id_interract=-1");
-        }
-      });
+        });
+        send[i].setAttribute('is_bind', 'true');
+      }
+    }
 
     for (let i = 0; i < interract.length; i++)
     {

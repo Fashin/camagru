@@ -12,7 +12,7 @@
         $psswd = htmlspecialchars($_POST['psswd']);
         $user = new User($db);
         $rep = $user->get_user(null, array("login"=>$login, "psswd"=>$psswd));
-        if ($rep && isset($rep[0]['id']))
+        if ($rep && isset($rep[0]['id']) && $rep[0]['is_confirmed'] == 1)
           $user->connect($rep[0]['id'], 'index.php');
         else
           header('Location:connect.php?error=log_in');
@@ -33,6 +33,10 @@
     session_start();
     session_destroy();
     header('Location: index.php?info=logout');
+  }
+  else if (isset($_GET['activation']) && isset($_GET['id']))
+  {
+    //activated a user
   }
   else
   {

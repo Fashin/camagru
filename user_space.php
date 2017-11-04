@@ -10,10 +10,11 @@
 ?>
 
 <div class="outils">
-  <div id="startbutton"></div><br><br>
-  <input type="color" name="color_picker" class="color_picker"><br>
+  <div id="startbutton"></div>
+  <input type="color" name="color_picker" class="color_picker">
   <input type="submit" name="apply_filter" value="Apply" class="apply_background">
-  <input type="submit" name="clean_canvas" value="Clean" class="clean_background"><br><br>
+  <input type="submit" name="clean_canvas" value="Clean" class="clean_background">
+  <input type="file" name="imageLoader" id="imageLoader"/>
   <div class="filtre-container">
     <?php
       $filtres = scandir('public/pictures/filtres');
@@ -28,16 +29,17 @@
         }
       }
     ?>
-  </select><br>
+  </select>
       <input type="submit" name="apply_filter" value="Apply" class="apply_filter">
       <input type="submit" name="clean_canvas" value="Clean" class="clean_filter">
   </div>
-  <input type="file" name="imageLoader" id="imageLoader">
 </div>
 
-<video id="video"></video>
-<canvas id="background_filter"></canvas>
-<canvas id="filtres"></canvas>
+<div class="creator-container">
+  <video id="video"></video>
+  <canvas id="background_filter"></canvas>
+  <canvas id="filtres"></canvas>
+</div>
 
 <div class="review"></div>
 
@@ -129,7 +131,7 @@
         r_canvas.setAttribute('id', 'video');
         r_canvas.setAttribute('type', 'picture');
         video.remove();
-        document.body.insertBefore(r_canvas, document.getElementsByClassName('outils')[0]);
+        document.getElementsByClassName('creator-container')[0].append(r_canvas);
         video = r_canvas;
         r_context.drawImage(img, 0, 0, 400, 300);
       }

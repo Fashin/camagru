@@ -1,21 +1,62 @@
-#video { position: relative; top: 6vh; left: 8vw; height: 300px; width: 400px; }
-#filtres, #background_filter { position: absolute; border: 1px solid red; top: 12vh; left: 26vw; width: 400px; height: 300px; }
-#startbutton
+.outils
 {
+  -moz-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -webkit-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -o-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  box-shadow: 1px 1px 10px 1px #9B9B9B;
+  height: 10vh; width: 100%;
+  text-align: center;
+  margin-top: 6vh;
+}
+
+.outils #startbutton
+{
+  height: 50px; width: 50px;
+  float: left; margin-left: 6vw;
+  display: inline-block;
+  cursor: pointer;
   background-image: url("../pictures/take_picture.png");
   background-size: 50px 50px;
   background-repeat: no-repeat;
-  height: 50px; width: 50px;
-  display: inline-block;
-  cursor: pointer;
 }
-#startbutton:hover { background-image: url("../pictures/take_picture-hover.png"); }
-#canvas { position: relative; top: 10vh; left: 26vw; width: 400px; height: 300px; display: block; }
-.upload_button { margin: 4vh 0 2vh 0; }
-.outils { height: 100%; width: 18vw; border: 1px solid black; float: left; text-align: center; margin-top: 6vh; }
-.review { display: inline-block; height: 100%; width: 14vw; border: 1px solid black; position: absolute; top: 12vh; right: 0; }
+.outils #startbutton:hover { background-image: url("../pictures/take_picture-hover.png"); }
+
+.outils .color_picker { float: left; margin: 2vh 0 0 11vw; }
+
+.outils .apply_background, .clean_background { float: left; margin: 3vh 0 0 1vw; }
+
+.outils #imageLoader { margin-top: 3vh; }
+
+.outils .filtre-container { margin-top: 3vh; display: inline-block; }
+
+.creator-container
+{
+  position: relative;
+  top: 4vh; left: 4vw;
+  height: 300px; width: 400px;
+  -moz-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -webkit-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -o-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  box-shadow: 1px 1px 10px 1px #9B9B9B;
+}
+
+.creator-container #video { height: 300px; width: 400px; }
+
+.creator-container #filtres, #background_filter { position: absolute; top: 0; left: 0; width: 400px; height: 300px; }
+
+.review
+{
+  position: absolute;
+  height: 100%; width: 26vw;
+  top: 26vh; right: 1vw;
+  display: block;
+  -moz-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -webkit-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  -o-box-shadow: 1px 1px 10px 1px #9B9B9B;
+  box-shadow: 1px 1px 10px 1px #9B9B9B;
+}
 .review .picture { margin-bottom: 10px; position: relative; }
-.review .picture img { width: 14vw; }
-.review .picture .delete { background: rgba(96, 107, 111, 0.5); opacity: 0; width: 14vw; height: 7vw; position: absolute; top: 0; cursor: pointer; }
+.review .picture img { width: 26vw; }
+.review .picture .delete { background: rgba(96, 107, 111, 0.5); opacity: 0; width: 26vw; height: 18.5vh; position: absolute; top: 0; cursor: pointer; }
 .review .picture .delete:hover { opacity: 1; }
-.review .picture .delete .bean { width: 5vw; margin-left: 5vw; }
+.review .picture .delete .bean { width: 5vw; margin: 3vh 0 0 12vw; }
