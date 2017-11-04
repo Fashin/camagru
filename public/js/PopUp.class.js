@@ -13,6 +13,7 @@ class PopUp
     let div = document.createElement('div')
     let img = document.createElement('img');
     let doc = document.createElement('span');
+    let old = document.getElementsByClassName('pop_up');
 
     doc.innerHTML = text;
 
@@ -25,6 +26,9 @@ class PopUp
     div.appendChild(doc);
 
     div.addEventListener('click', (e) => { this.close(e); });
+
+    if (old.length > 0)
+      old[0].remove();
 
     document.body.prepend(div);
   }

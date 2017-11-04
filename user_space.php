@@ -230,8 +230,8 @@
         tmp_canvas.getContext('2d').drawImage(video, 0, 0, tmp_canvas.width, tmp_canvas.height)
       else
         tmp_canvas = video;
-     send_background = tmp_canvas.toDataURL();
 
+     send_background = tmp_canvas.toDataURL();
      blank.width = tmp_canvas.width;
      blank.height = tmp_canvas.height;
      if (tmp_canvas.toDataURL() == blank.toDataURL())

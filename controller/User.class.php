@@ -72,8 +72,12 @@ class User
     $ret = $this->get_pictures($id_picture)[0];
     if (!empty($ret))
     {
+      $this->_pdo->exec("DELETE FROM interract WHERE id_picture=". $ret['id']);
       $state = $this->_pdo->exec('DELETE FROM picture WHERE id=' . $ret['id']);
-      if ($state) { return(unlink("../" . $ret['path'])); } else { return ($state); };
+      if ($state)
+        return(unlink("../" . $ret['path']));
+      else
+        return ($state);
     }
   }
 
