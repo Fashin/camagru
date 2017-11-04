@@ -7,3 +7,5 @@
 }
 
 .form-connection input { float: right; display: block; }
+
+.activation { position: absolute; top: 10vh; left: 30vw; }

@@ -105,13 +105,17 @@ class User
       return (-3);
     if (!preg_match($pattern, $data['psswd']))
       return (-4);
+    if ($this->get_user('id', array("email" => $data['email'])))
+      return (-5);
     $sql = "INSERT INTO user (login, email, psswd, is_confirmed) VALUES ";
     $sql .= "('" . $data['log_in'] . "', '" . $data['email'] . "', '" . hash('whirlpool', $this->salt . $data['psswd']) .  "', 0)";
-    $text = "Salut a tous !";
-    mail($data['email'], "subscribe to Cyprian's Camagru", $text);
     $ret['errror'] = ($this->_pdo->query($sql)) ? 0 : 1;
     $id = $this->get_user("id", array("login"=>$data['log_in']));
-    return ($ret['id'] = $id[0]['id']);
+    $ret['id'] = $id[0]['id'];
+    $text = "Pour activer votre compte cliquer sur le lien ou copier/coller le dans votre navigateur ";
+    $text .= "http://localhost:8080/camagru/connect.php?activation=true&id='" . urlencode($ret['id']) . "'";
+    $ret['mail'] = (mail($data['email'], "subscribe to Cyprian's Camagru", "test")) ? 0 : 1;
+    return ($ret);
   }
 }
 
