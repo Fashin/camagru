@@ -97,20 +97,25 @@ class User
       if (in_array($k, $require) && !empty($v))
         $data[$k] = htmlspecialchars($v);
       else
-        return (-1);
+        return (1);
     }
     if ($data['psswd'] != $data['confirm_psswd'])
-      return (-2);
+      return (2);
     if ($this->get_user("id", array("login"=>$data['log_in'])))
-      return (-3);
+      return (3);
     if (!preg_match($pattern, $data['psswd']))
-      return (-4);
+      return (4);
     if ($this->get_user('id', array("email" => $data['email'])))
-      return (-5);
-    $sql = "INSERT INTO user (login, email, psswd, is_confirmed) VALUES ";
-    $sql .= "('" . $data['log_in'] . "', '" . $data['email'] . "', '" . hash('whirlpool', $this->salt . $data['psswd']) .  "', 0)";
-    $ret['errror'] = ($this->_pdo->query($sql)) ? 0 : 1;
-    $id = $this->get_user("id", array("login"=>$data['log_in']));
+      return (5);
+    $req = $this->_pdo->prepare("INSERT INTO user (login, email, psswd, is_confirmed) VALUES (:login, :email, :psswd, :is_confirmed)");
+    $bool = $req->execute([
+      ':login' => $data['log_in'],
+      ':email' => $data['email'],
+      ':psswd' => hash('whirlpool', $this->salt . $data['psswd']),
+      ':is_confirmed' => 0
+    ]);
+    $ret['error'] = $bool;
+    $id = $this->get_user("id", array("login" => $data['log_in']));
     $ret['id'] = $id[0]['id'];
     $text = "Pour activer votre compte cliquer sur le lien ou copier/coller le dans votre navigateur ";
     $text .= "http://localhost:8080/camagru/connect.php?activation=true&id='" . urlencode($ret['id']) . "'";

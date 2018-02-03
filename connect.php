@@ -28,7 +28,7 @@
     require_once("controller/User.class.php");
     $user = new User($db);
     $error = $user->new_user($_POST);
-    if (!($error))
+    if (isset($error['error']) && !($error))
     {
       if ($error['mail'])
         header('Location:connect.php?error=mail_delivery');
@@ -36,7 +36,32 @@
         header('Location:connect.php?error=register');
     }
     else
-      header('Location:connect.php?error=activated');
+    {
+      if (is_int($error))
+      {
+        switch ($error)
+        {
+          case 1:
+            header('Location:connect.php?error=fill');
+            break;
+          case 2:
+            header('Location:connect.php?error=psswd');
+            break;
+          case 3:
+            header('Location:connect.php?error=login_picked');
+            break;
+          case 4:
+            header('Location:connect.php?error=psswd_n_conform');
+            break;
+          case 5:
+            header('Location:connect.php?error=email_picked');
+            break;
+          default:
+            header('Location:connect.php?error=activated');
+            break;
+        }
+      }
+    }
   }
   else if (isset($_GET['recovery_page']))
   {
@@ -86,8 +111,31 @@
     }
     else
     {
-      if (isset($_GET['error']) && $_GET['error'] == "activated")
-        echo "<div class='activation'>Account created, please activate it !</div>";
+      if (isset($_GET['error']))
+      {
+        $error = htmlspecialchars($_GET['error']);
+        switch ($error)
+        {
+          case 'activated':
+            echo "<div class='activation'>Account created, please activate it !</div>";
+            break;
+          case 'fill':
+            echo "<div class='activation'>Please fill all the field</div>";
+            break;
+          case 'psswd':
+            echo "<div class='activation'>Password not the same</div>";
+            break;
+          case 'login_picked':
+            echo "<div class='activation'>Login already exists</div>";
+            break;
+          case 'psswd_n_conform':
+            echo "<div class='activation'>Password must be with a minus and maj letter, a number and special caractere</div>";
+            break;
+          case 'email_picked':
+            echo "<div class='activation'>Email already exists</div>";
+            break;
+        }
+      }
       ?>
 
       <form class="form-connection" action="connect.php" method="post">
