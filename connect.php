@@ -61,6 +61,9 @@
             break;
         }
       }
+      else {
+        header('Location:connect.php?success=true');
+      }
     }
   }
   else if (isset($_GET['recovery_page']))
@@ -75,13 +78,22 @@
   }
   else if (isset($_GET['activation']) && isset($_GET['id']))
   {
-    //activated a user
+    require_once("controller/User.class.php");
+    $ret = new User($db);
+    $error = $ret->confirmation_user(htmlspecialchars($_GET['id']));
+    if ($error)
+      header('Location:connect.php?page=log_in');
+    else
+      header('Location:connect.php?page=sign_in&error=confirmation');
   }
   else
   {
     require_once("public/header.php");
 
     $page = (isset($_GET['page'])) ? htmlspecialchars($_GET['page']) : "sign_in";
+
+    if (isset($_GET['error']) && $_GET['error'] == "activated")
+      echo "<div class='activation'>Veuillez activer votre compte !</div>";
 
     if ($page == "log_in")
     {
@@ -134,8 +146,13 @@
           case 'email_picked':
             echo "<div class='activation'>Email already exists</div>";
             break;
+          case 'confirmation':
+            echo "<div class='activation'>Error from confirmation request update :(</div>";
+            break;
         }
       }
+      else if (isset($_GET['success']))
+        echo "<div class='activation'>Vous avez bien etait enregistrer, veuillez confirmer votre email</div>";
       ?>
 
       <form class="form-connection" action="connect.php" method="post">

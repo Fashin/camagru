@@ -81,6 +81,13 @@ class User
     }
   }
 
+  public function confirmation_user($id)
+  {
+    $ret = $this->_pdo->prepare("UPDATE user SET is_confirmed=:conf WHERE id=:id");
+    $bool = $ret->execute([':conf' => 1, ':id' => $id]);
+    return ($bool);
+  }
+
   public function connect($id, $redirect)
   {
     session_start();
