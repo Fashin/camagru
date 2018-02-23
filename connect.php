@@ -92,9 +92,6 @@
 
     $page = (isset($_GET['page'])) ? htmlspecialchars($_GET['page']) : "sign_in";
 
-    if (isset($_GET['error']) && $_GET['error'] == "activated")
-      echo "<div class='activation'>Veuillez activer votre compte !</div>";
-
     if ($page == "log_in")
     {
       ?>
