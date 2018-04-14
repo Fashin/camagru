@@ -27,6 +27,6 @@ header .logout:hover { text-decoration: underline; }
   height: 38.7vh; width: 26.5vw;
 }
 
-.pop_up img { height: 26.5vw; height: 38.6vh; }
+.pop_up img { width: 26.5vw; height: 38.6vh; }
 
 .pop_up-text { position: absolute; top: 28vh; left: 7vw; z-index: 1; }

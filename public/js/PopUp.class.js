@@ -17,7 +17,7 @@ class PopUp
 
     doc.innerHTML = text;
 
-    img.src = "/camagru/public/pictures/pop_up/" + type + ".png";
+    img.src = "./../public/pictures/pop_up/" + type + ".png";
 
     div.className += "pop_up";
     doc.className += "pop_up-text";
@@ -30,6 +30,9 @@ class PopUp
     if (old.length > 0)
       old[0].remove();
 
+    let pop_up = document.getElementsByClassName('pop_up');
+    if (pop_up.length > 0)
+      pop_up.remove();
     document.body.prepend(div);
   }
 }

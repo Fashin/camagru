@@ -66,6 +66,12 @@
         xhr.onreadystatechange = (e) => {
           if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
           {
+            let res = parseInt(xhr.response);
+            if (res < 0)
+            {
+              alert("Veuillez vous connecter");
+              return (false);
+            }
             if (state)
               hearth[i].setAttribute('src', 'public/pictures/empty_hearth.png');
             else

@@ -260,7 +260,9 @@
      */
      apply_filter.addEventListener('click', (e) => {
        f_context.clearRect(0, 0, f_canvas.width, f_canvas.height);
-       img.src = 'public/pictures/filtres/' + all_filters.options[all_filters.selectedIndex].value;
+       let val = all_filters.options[all_filters.selectedIndex].value;
+       if (val == "chapeau_noel.png" || val == "flocon.png" || val == "parasol.png")
+          img.src = 'public/pictures/filtres/' + all_filters.options[all_filters.selectedIndex].value;
      });
 
      apply_background.addEventListener('click', (e) => {

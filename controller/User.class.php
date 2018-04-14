@@ -81,6 +81,29 @@ class User
     }
   }
 
+  public function update_password($psswd, $email)
+  {
+    if ($email !== undefined)
+    {
+      $ret = $this->_pdo->prepare("UPDATE user SET psswd=:psswd WHERE email=:email");
+      $bool = $ret->execute([
+        ':psswd' => hash('whirlpool', $this->salt . $psswd),
+        ':email' => $email
+      ]);
+      return ($bool);
+    }
+    else
+      return (false);
+  }
+
+  public function reset_password($email)
+  {
+    $text = "Pour remettre a zero votre mot de passe cliquer sur le lien suivant : ";
+    $text .= "http://localhost:8080/connect.php?reset_password=true&email=" . $email;
+    return (mail($email, "reset password to Cyprian's Camagru", $text));
+
+  }
+
   public function confirmation_user($id)
   {
     $ret = $this->_pdo->prepare("UPDATE user SET is_confirmed=:conf WHERE id=:id");
@@ -125,8 +148,8 @@ class User
     $id = $this->get_user("id", array("login" => $data['log_in']));
     $ret['id'] = $id[0]['id'];
     $text = "Pour activer votre compte cliquer sur le lien ou copier/coller le dans votre navigateur ";
-    $text .= "http://localhost:8080/camagru/connect.php?activation=true&id='" . urlencode($ret['id']) . "'";
-    $ret['mail'] = (mail($data['email'], "subscribe to Cyprian's Camagru", "test")) ? 0 : 1;
+    $text .= "http://localhost:8080/connect.php?activation=true&id=" . urlencode($ret['id']);
+    $ret['mail'] = (mail($data['email'], "subscribe to Cyprian's Camagru", $text)) ? 0 : 1;
     return ($ret);
   }
 }
